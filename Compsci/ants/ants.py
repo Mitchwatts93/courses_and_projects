@@ -528,7 +528,7 @@ class AntRemover(Ant):
     """Allows the player to remove ants from the board in the GUI."""
 
     name = 'Remover'
-    implemented = True
+    implemented = False
 
     def __init__(self):
         Ant.__init__(self, 0)
