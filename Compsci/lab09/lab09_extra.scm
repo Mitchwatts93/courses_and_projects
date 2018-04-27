@@ -3,17 +3,21 @@
 
 ; Q5
 (define lst
-  'YOUR-CODE-HERE
+  (cons (cons 1 '())
+        (cons 2
+              (cons (cons 3 4)
+                    (cons 5 '()))))
 )
+
 
 ; Q6
 (define (composed f g)
-  'YOUR-CODE-HERE
+  (lambda (x) (f (g x)))
 )
 
 ; Q7
 (define (remove item lst)
-  'YOUR-CODE-HERE
+  (filter (lambda (x) (not (= x item))) lst)
 )
 
 
@@ -29,7 +33,12 @@
 (define (max a b) (if (> a b) a b))
 (define (min a b) (if (> a b) b a))
 (define (gcd a b)
-  'YOUR-CODE-HERE
+  (cond
+   ((zero? a) b)
+   ((zero? b) a)
+   ((= (modulo (max a b) (min a b)) 0) (min a b))
+   (else (gcd (min a b) (modulo (max a b) (min a b))))
+   )
 )
 
 ;;; Tests
@@ -40,15 +49,29 @@
 
 ; Q9
 (define (no-repeats s)
-  'YOUR-CODE-HERE
+(if (null? s) s
+    (cons (car s)
+      (no-repeats (filter (lambda (x) (not (= (car s) x))) (cdr s)))))
 )
 
 ; Q10
 (define (substitute s old new)
-  'YOUR-CODE-HERE
+  (cond
+   ((null? s) nil)
+   ((pair? (car s)) (cons (substitute (car s) old new)
+			  (substitute (cdr s) old new)))
+   ((equal? (car s) old) (cons new
+			       (substitute (cdr s) old new)))
+   (else (cons (car s)
+	       (substitute (cdr s) old new)))
+   )
 )
 
 ; Q11
 (define (sub-all s olds news)
-  'YOUR-CODE-HERE
+  (if (null? olds)
+    s
+    (sub-all (substitute s (car olds) (car news))
+             (cdr olds)
+             (cdr news)))
 )
